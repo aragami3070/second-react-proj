@@ -1,5 +1,5 @@
-import Register from "@/app/pages/Register";
+import RegisterPage from "@/app/pages/Register";
 
 export default function Page() {
-  return <Register />
+  return <RegisterPage />
 }

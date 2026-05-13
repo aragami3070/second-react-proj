@@ -1,27 +1,25 @@
+"use client";
 import type { SubmitHandler } from "react-hook-form";
 import type { AuthFieldConfig } from "@/features/auth/ui/AuthTemplatePage";
 import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
-import { type RootState } from "@/shared/store";
-import { register } from "../store/user";
-import  useNavigate from "next";
+import { useRouter } from "next/navigation"
 import { useAppStore } from "@/shared/store";
+import { registerAction } from "@/features/auth/actions/authActions";
 
-export default function Register() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const isAuth = useAppStore((state: RootState) => state.isAuth);
-  const isUserLoaded = useAppStore((state: RootState) => state.isUserLoaded);
+export default function RegisterPage() {
+  const router = useRouter();
+  const {isAuth, isUserLoaded } = useAppStore.getState();
 
   const onSubmit: SubmitHandler<RegisterFormValues> = async (data: RegisterFormValues) => {
-    await dispatch(register({
+    await registerAction({
       firstName: data.firstName,
       secondName: data.secondName,
       email: data.email,
       password: data.password
-    }));
+    });
 
     if (isAuth && isUserLoaded) {
-      navigate("/profile")
+      router.push("/profile")
     }
   };
 
