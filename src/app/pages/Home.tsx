@@ -1,12 +1,10 @@
-import { Button, SvgIcon, Typography, useTheme } from "@mui/material";
+import { Button, SvgIcon, Typography } from "@mui/material";
 import Icon from "../assets/icon.svg?react"
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
 import { Img } from "@/shared/ui/Img";
 import Link from "next/link";
 
-export default function Home() {
-
-  const theme = useTheme();
+export default function HomePage() {
   return (
     <>
       <GridBackGroundLayout sx={{ minWidth: '100vw' }}>
@@ -24,13 +22,16 @@ export default function Home() {
         <Typography variant="h4" sx={{ padding: 2, paddingBottom: 8 }}>
           Ваши любимые мемные цитаты из фильмов и сериалов.
         </Typography>
-        <Button component={Link} to="/profile" sx={{
-          borderRadius: "12px",
-          px: 2.5,
-          boxShadow: 3,
-          color: theme.palette.text.primary,
-          background: theme.palette.primary.main
-        }}>
+        <Button
+          component={Link}
+          href="/profile"
+          sx={{
+            borderRadius: "12px",
+            px: 2.5,
+            boxShadow: 3,
+            color: "text.primary",
+            background: "primary.main"
+          }}>
           Начать!
         </Button>
       </GridBackGroundLayout>
