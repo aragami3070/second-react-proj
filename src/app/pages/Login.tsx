@@ -1,26 +1,23 @@
+"use client";
 import type { SubmitHandler } from "react-hook-form";
-import { login } from "../store/user";
-import { useAppDispatch } from "../store/hooks";
 import type { AuthFieldConfig } from "@/features/auth/ui/AuthTemplatePage";
 import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
-import { useAppStore, type RootState } from "@/shared/store";
-import { useNavigate } from "react-router-dom";
+import { useAppStore } from "@/shared/store";
+import { useRouter } from "next/navigation"
+import { loginAction } from "@/features/auth/actions/authActions";
 
-export default function Login() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const isAuth = useAppStore((state: RootState) => state.isAuth);
-  const isUserLoaded = useAppStore((state: RootState) => state.isUserLoaded);
+export default function LoginPage() {
+  const router = useRouter();
+  const { isAuth, isUserLoaded } = useAppStore.getState();
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    await dispatch(login({
+    await loginAction({
       email: data.email,
       password: data.password
-    }));
+    });
 
     if (isAuth && isUserLoaded) {
-      navigate("/profile")
+      router.push("/profile")
     }
   };
 
@@ -43,7 +40,6 @@ type LoginFormValues = {
   email: string;
   password: string;
 };
-
 
 const fields: AuthFieldConfig<LoginFormValues>[] = [
   {
