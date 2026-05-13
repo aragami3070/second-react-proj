@@ -51,3 +51,29 @@ export const getMeAction = async () => {
     }
   )
 }
+
+export const registerAction = async (data: {
+  firstName: string;
+  secondName: string;
+  email: string;
+  password: string
+}) => {
+  const { authSuccess, authFailed, setError } = useAppStore.getState();
+  asyncHandler(
+    async () => {
+      const tokens = await authApi.register(data);
+
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("refreshToken", tokens.data.refreshToken);
+        sessionStorage.setItem("accessToken", tokens.data.accessToken);
+      }
+
+      authSuccess();
+      await getMeAction();
+    },
+    (error) => {
+      authFailed();
+      setError(getErrorMessage(error));
+    }
+  )
+}
