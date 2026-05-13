@@ -12,6 +12,31 @@ export const logoutAction = () => {
   const { clearUser } = useAppStore.getState();
   clearUser();
 };
+
+export const loginAction = async (data: {
+  email: string;
+  password: string
+}) => {
+  const { authSuccess, authFailed, setError } = useAppStore.getState();
+  asyncHandler(
+    async () => {
+      const tokens = await authApi.login(data);
+
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("refreshToken", tokens.data.refreshToken);
+        sessionStorage.setItem("accessToken", tokens.data.accessToken);
+      }
+
+      authSuccess();
+      await getMeAction();
+    },
+    (error) => {
+      authFailed();
+      setError(getErrorMessage(error));
+    }
+  )
+}
+
 export const getMeAction = async () => {
   const { setUser, clearUser, setError } = useAppStore.getState();
 
