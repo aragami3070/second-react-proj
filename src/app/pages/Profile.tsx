@@ -8,16 +8,15 @@ import {
   Divider,
   Button
 } from "@mui/material"
-import { type RootState } from "../store"
-import { Link, useNavigate } from "react-router-dom"
-import { GridBackGroundLayout } from "../ui/GridBackGroundLayout"
-import { useAppDispatch, useAppSelector } from "../store/hooks"
-import { logout } from "../store/user"
+import { useAppStore, type RootState } from "@/shared/store"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout"
+import { logoutAction } from "@/features/auth/actions/authActions"
 
 export default function Profile() {
-  const user = useAppSelector((state: RootState) => state.user.user)
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  const user = useAppStore((state: RootState) => state.user)
+  const router = useRouter()
 
   if (!user) {
     return (
@@ -28,8 +27,8 @@ export default function Profile() {
   }
 
   const handleLogout = () => {
-    dispatch(logout())
-    navigate("/login")
+    logoutAction();
+    router.push("/login");
   }
 
   return (
@@ -95,7 +94,7 @@ export default function Profile() {
                 variant="contained"
                 key={"/"}
                 component={Link}
-                to={"/"}
+                href={"/"}
               >
                 На главную
               </Button>
