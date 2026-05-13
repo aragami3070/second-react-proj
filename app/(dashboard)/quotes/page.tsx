@@ -1,4 +1,4 @@
-import { QuotesPage } from "@/app/pages/Qoutes";
+import { QuotesPage } from "@/app/pages/Quotes";
 
 export default function Page() {
   return <QuotesPage />
