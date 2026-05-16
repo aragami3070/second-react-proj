@@ -41,7 +41,7 @@ api.interceptors.response.use(
           return;
         }
         try {
-          const res = await api.put<{ access_token: string, refresh_token: string }>(
+          const res = await api.post<{ access_token: string, refresh_token: string }>(
             "Auth/RefreshAllTokens",
             null,
             { params: oldRefreshToken }
