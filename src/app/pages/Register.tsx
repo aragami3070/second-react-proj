@@ -5,10 +5,16 @@ import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
 import { useRouter } from "next/navigation"
 import { useAppStore } from "@/shared/store";
 import { registerAction } from "@/features/auth/actions/authActions";
+import { useShallow } from "zustand/shallow";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const {isAuth, isUserLoaded } = useAppStore.getState();
+  const { isAuth, isUserLoaded } = useAppStore(
+    useShallow((state) => ({
+      isAuth: state.isAuth,
+      isUserLoaded: state.isUserLoaded
+    }))
+  );
 
   const onSubmit: SubmitHandler<RegisterFormValues> = async (data: RegisterFormValues) => {
     await registerAction({

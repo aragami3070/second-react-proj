@@ -5,10 +5,16 @@ import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
 import { useAppStore } from "@/shared/store";
 import { useRouter } from "next/navigation"
 import { loginAction } from "@/features/auth/actions/authActions";
+import { useShallow } from "zustand/shallow";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { isAuth, isUserLoaded } = useAppStore.getState();
+  const { isAuth, isUserLoaded } = useAppStore(
+    useShallow((state) => ({
+      isAuth: state.isAuth,
+      isUserLoaded: state.isUserLoaded
+    }))
+  );
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     await loginAction({
@@ -16,6 +22,7 @@ export default function LoginPage() {
       password: data.password
     });
 
+    console.log(isUserLoaded);
     if (isAuth && isUserLoaded) {
       router.push("/profile")
     }

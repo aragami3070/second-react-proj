@@ -1,3 +1,4 @@
+'use client';
 import {
   Box,
   Container,
@@ -8,15 +9,15 @@ import {
   Divider,
   Button
 } from "@mui/material"
-import { useAppStore, type RootState } from "@/shared/store"
+import { useAppStore } from "@/shared/store"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout"
 import { logoutAction } from "@/features/auth/actions/authActions"
 
-export default function Profile() {
-  const user = useAppStore((state: RootState) => state.user)
-  const router = useRouter()
+export default function ProfilePage() {
+  const user = useAppStore((state) => state.user);
+  const router = useRouter();
 
   if (!user) {
     return (
