@@ -10,6 +10,23 @@ export const createQuoteAction = async (quoteText: string) => {
   )
 }
 
+export const fetchQuotesAction = async (
+  offset: number,
+  limit: number
+) => {
+  const { setQuotes } = useAppStore.getState();
+  return asyncHandler(
+    async () => {
+      setQuotes(
+        (await quotesApi.fetchQuotes(offset, limit)).data
+        , offset
+      );
+      await fetchQuotesCountAction();
+    },
+  )
+}
+
+
 export const fetchQuotesCountAction = async () => {
   const { setTotal } = useAppStore.getState();
   return asyncHandler(
