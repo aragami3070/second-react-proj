@@ -1,16 +1,26 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { clearError } from "../store/settings";
+"use client";
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography
+} from "@mui/material";
+import { useAppStore } from "@/shared/store";
+import { useShallow } from "zustand/shallow";
 
 export const ErrorModal = () => {
-  const dispatch = useAppDispatch();
-
-  const { error, isErrorModalOpen } = useAppSelector(
-    (state) => state.settings
+  const { error, isErrorModalOpen, clearError } = useAppStore(
+    useShallow((state) => ({
+      error: state.error,
+      isErrorModalOpen: state.isErrorModalOpen,
+      clearError: state.clearError
+    }))
   );
 
   const handleClose = () => {
-    dispatch(clearError());
+    clearError();
   };
 
   return (
