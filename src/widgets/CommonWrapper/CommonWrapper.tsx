@@ -1,11 +1,12 @@
+"use client";
 import type { ReactNode } from "react";
-import { useAppSelector } from "../../store/hooks";
 import { CircularProgress, Box } from "@mui/material";
 import { ErrorModal } from "@/widgets/ErrorModal/ErrorModal";
+import { useAppStore } from "@/shared/store";
 
 
 export const CommonWrapper = ({ children }: { children: ReactNode }) => {
-  const isLoading = useAppSelector((state) => state.settings.isLoading);
+  const isLoading = useAppStore((state) => state.isLoading);
 
   return (
     <Box sx={{ position: "relative" }}>
