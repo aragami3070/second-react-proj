@@ -1,13 +1,25 @@
+import { Box, BoxProps } from "@mui/material";
 
-export const Img = ({src}: {src: string}) => {
+export type ImgProps = BoxProps<"img"> & {
+  src: string;
+  alt?: string;
+};
+
+export function Img({ src, alt = "", sx, ...props }: ImgProps) {
   return (
-    <img
+    <Box
+      component="img"
       src={src}
-      style={{
-        width: '100%',
-        maxWidth: 1000,
-        borderRadius: 3,
-      }}
+      alt={alt}
+      sx={[
+        {
+          width: '100%',
+          maxWidth: 1000,
+          borderRadius: 3,
+        },
+        ...(Array.isArray(sx) ? sx : [sx])
+      ]}
+      {...props}
     />
   );
 }
