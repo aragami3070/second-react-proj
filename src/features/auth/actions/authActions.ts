@@ -97,3 +97,22 @@ export const refreshAction = async () => {
     }
   )
 }
+
+export const refreshOnStartAction = async () => {
+  const { authFailed } = useAppStore.getState();
+  return asyncHandler(
+    async () => {
+      const isRefresed = await refreshAction();
+      if (isRefresed) {
+        await getMeAction();
+      }
+      else {
+        authFailed();
+      }
+    },
+    (_) => {
+      logoutAction();
+      authFailed();
+    }
+  )
+}

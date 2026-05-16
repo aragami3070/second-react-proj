@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation"
 import { usePathname } from "next/navigation";
 import { useAppStore } from "@/shared/store";
-import { refreshAuthAction } from "@/features/auth/actions/authActions";
+import { refreshOnStartAction } from "@/features/auth/actions/authActions";
 import { guestRoutes, privateRoutes } from "@/shared/config/nav";
 
 export const AuthWrapper = ({ children }: { children: ReactNode }) => {
@@ -24,7 +24,7 @@ export const AuthWrapper = ({ children }: { children: ReactNode }) => {
 
     const tryInitRefresh = async () => {
       if (!isAuthInitialized) {
-        await refreshAuthAction();
+        await refreshOnStartAction();
       }
     };
     tryInitRefresh();
