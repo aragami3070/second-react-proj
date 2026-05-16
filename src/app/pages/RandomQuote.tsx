@@ -1,26 +1,23 @@
 'use client'
 import { useEffect } from "react";
 import { Stack, Button } from "@mui/material";
-import { useAppDispatch } from "../store/hooks";
-import { fetchRandomQuote } from "../store/quote/thunks";
 import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
 import { useAppStore } from "@/shared/store";
+import { fetchRandomQuoteAction } from "@/features/quotes/actions/quotesActions";
 
 export function RandomQuotePage() {
-  const dispatch = useAppDispatch();
-
   const randomQuote = useAppStore((state) => state.randomQuote);
 
   useEffect(() => {
     const getRandomQuote = async () => {
-      await dispatch(fetchRandomQuote());
+      await fetchRandomQuoteAction();
     };
     getRandomQuote()
-  }, [dispatch]);
+  }, []);
 
   const handleRefresh = async () => {
-    await dispatch(fetchRandomQuote());
+    await fetchRandomQuoteAction();
   };
 
   return (
@@ -34,7 +31,7 @@ export function RandomQuotePage() {
         {randomQuote && <QuoteCard quote={randomQuote} />}
 
         <Button variant="contained" onClick={handleRefresh}>
-          Удиви меня.
+          Удиви меня
         </Button>
       </Stack>
     </GridBackGroundLayout>
