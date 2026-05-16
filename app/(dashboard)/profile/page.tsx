@@ -1,5 +1,5 @@
-import Profile from "@/app/pages/Profile";
+import ProfilePage from "@/app/pages/Profile";
 
 export default function Page() {
-  return <Profile />
+  return <ProfilePage />
 }
