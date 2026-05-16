@@ -16,4 +16,6 @@ export const quotesApi = {
     api.get<Quote[]>(`/Quote/${offset}/${limit}`),
 
   fetchQuotesCount: () => api.get<number>("/Quote/TotalQuotes"),
+
+  fetchRandomQuote: () => api.get<Quote>("/Quote/GetRand"),
 };
