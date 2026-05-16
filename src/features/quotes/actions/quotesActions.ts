@@ -34,3 +34,15 @@ export const fetchQuotesCountAction = async () => {
     },
   )
 }
+
+export const fetchRandomQuoteAction = async () => {
+  const { setRandomQuote } = useAppStore.getState();
+  return asyncHandler(
+    async () => {
+      setRandomQuote(
+        (await quotesApi.fetchRandomQuote()).data
+      );
+      await fetchQuotesCountAction();
+    },
+  )
+}
