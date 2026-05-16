@@ -41,17 +41,20 @@ api.interceptors.response.use(
           return;
         }
         try {
-          const res = await api.post<{ access_token: string, refresh_token: string }>(
+          const res = await api.post<{
+            accessToken: string,
+            refreshToken: string
+          }>(
             "Auth/RefreshAllTokens",
             null,
-            { params: oldRefreshToken }
+            { params: { oldRefreshToken } }
           );
 
-          sessionStorage.setItem("accessToken", res.data.access_token);
-          sessionStorage.setItem("refreshToken", res.data.refresh_token);
+          sessionStorage.setItem("accessToken", res.data.accessToken);
+          sessionStorage.setItem("refreshToken", res.data.refreshToken);
 
           // повторяем запрос с новым accessToken
-          originalRequest.headers.Authorization = `Bearer ${res.data.access_token}`;
+          originalRequest.headers.Authorization = `Bearer ${res.data.accessToken}`;
           return await api(originalRequest);
         } catch (e: any) {
           sessionStorage.setItem("accessToken", "");
