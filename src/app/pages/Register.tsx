@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { useAppStore } from "@/shared/store";
 import { registerAction } from "@/features/auth/actions/authActions";
 import { useShallow } from "zustand/shallow";
+import { useEffect } from "react";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -16,6 +17,12 @@ export default function RegisterPage() {
     }))
   );
 
+  useEffect(() => {
+    if (isAuth && isUserLoaded) {
+      router.push("/profile")
+    }
+  }, [isAuth, isUserLoaded])
+
   const onSubmit: SubmitHandler<RegisterFormValues> = async (data: RegisterFormValues) => {
     await registerAction({
       firstName: data.firstName,
@@ -23,10 +30,6 @@ export default function RegisterPage() {
       email: data.email,
       password: data.password
     });
-
-    if (isAuth && isUserLoaded) {
-      router.push("/profile")
-    }
   };
 
   return (

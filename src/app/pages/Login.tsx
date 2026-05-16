@@ -6,6 +6,7 @@ import { useAppStore } from "@/shared/store";
 import { useRouter } from "next/navigation"
 import { loginAction } from "@/features/auth/actions/authActions";
 import { useShallow } from "zustand/shallow";
+import { useEffect } from "react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,16 +17,18 @@ export default function LoginPage() {
     }))
   );
 
+  useEffect(() => {
+    if (isAuth && isUserLoaded) {
+      router.push("/profile")
+    }
+  }, [isAuth, isUserLoaded])
+
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
     await loginAction({
       email: data.email,
       password: data.password
     });
 
-    console.log(isUserLoaded);
-    if (isAuth && isUserLoaded) {
-      router.push("/profile")
-    }
   };
 
   return (
