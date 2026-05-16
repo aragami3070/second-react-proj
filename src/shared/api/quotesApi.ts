@@ -8,5 +8,11 @@ export const quotesApi = {
       null,
       { params: { quoteText } }
     ),
+
+  fetchQuotes: (
+    { offset, limit }: {
+      offset: number;
+      limit: number
+    }) =>
+    api.get<Quote[]>(`/Quote/${offset}/${limit}`),
 };
-;
