@@ -1,3 +1,4 @@
+"use client";
 import { alpha, Box, BoxProps, Container } from "@mui/material";
 
 export type GridBackGroundLayoutProps = BoxProps & {
@@ -13,11 +14,11 @@ export const GridBackGroundLayout = ({ children, sx, ...props }: GridBackGroundL
             linear-gradient(90deg, ${gridColor} 1px, transparent 1px)
           `,
         backgroundSize: "40px 40px",
-      minHeight: "100vh",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-};
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      };
     },
     ...(Array.isArray(sx) ? sx : [sx])
     ]} {...props}>

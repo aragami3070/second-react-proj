@@ -1,3 +1,4 @@
+"use client"
 import { TextField, type TextFieldProps } from "@mui/material";
 
 export const InputTextField = ({ sx, ...props }: TextFieldProps) => {
