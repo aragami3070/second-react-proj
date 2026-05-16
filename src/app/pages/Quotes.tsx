@@ -1,30 +1,36 @@
+"use client";
 import { useEffect } from "react";
 import { Box, Pagination, Stack } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { fetchQuotes } from "../store/quote/thunks";
-import { QuoteCard } from "../components/QuoteCard";
-import { GridBackGroundLayout } from "../ui/GridBackGroundLayout";
+import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
+import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
+import { useAppStore } from "@/shared/store";
+import { useShallow } from "zustand/shallow";
+import { fetchQuotesAction } from "@/features/quotes/actions/quotesActions";
 
 
-// NOTE: сделать в контейнере который внутри себя скролится и пагинация поверх карточек
 export const QuotesPage = () => {
-  const dispatch = useAppDispatch();
-
-  const { quotes, offset, limit, total } = useAppSelector((state) => state.quotes);
+  const { quotes, offset, limit, total } = useAppStore(
+    useShallow((state) => ({
+      quotes: state.quotes,
+      offset: state.offset,
+      limit: state.limit,
+      total: state.total
+    }))
+  );
 
   const page = Math.floor(offset / limit) + 1;
   const pageCount = Math.ceil(total / limit);
 
   useEffect(() => {
     const getQuotes = async () => {
-      await dispatch(fetchQuotes({ offset: offset, limit: limit }));
+      await fetchQuotesAction(offset, limit);
     };
     getQuotes()
-  }, [dispatch]);
+  }, []);
 
   const handlePageChange = async (_: React.ChangeEvent<unknown>, value: number) => {
     const newOffset = (value - 1) * limit;
-    await dispatch(fetchQuotes({ offset: newOffset, limit }));
+    await fetchQuotesAction(newOffset, limit);
   };
 
   return (

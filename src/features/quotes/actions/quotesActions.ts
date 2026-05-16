@@ -26,7 +26,6 @@ export const fetchQuotesAction = async (
   )
 }
 
-
 export const fetchQuotesCountAction = async () => {
   const { setTotal } = useAppStore.getState();
   return asyncHandler(
