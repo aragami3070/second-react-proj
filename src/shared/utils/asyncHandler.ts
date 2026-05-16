@@ -1,3 +1,4 @@
+"use client"
 import { useAppStore } from "@/shared/store";
 import { getErrorMessage } from "@/shared/utils/errorTemplateMessage";
 import type { AxiosError } from "axios";
@@ -7,7 +8,7 @@ export const asyncHandler = async <T>(
   // Замыкание с основной логикой
   requestLogic: () => Promise<T>,
   // Опциональное замыкание для кастомной ошибки
-  errorLogic?: (error: AxiosError<ApiError>) => void,
+  errorLogic?: (error: AxiosError<ApiError>) => T,
   // Флаг, если нужен тихий запрос без лоадера
   silent: boolean = false
 ) => {
@@ -20,7 +21,7 @@ export const asyncHandler = async <T>(
     const error = e as AxiosError<ApiError>;
 
     if (errorLogic) {
-      errorLogic(error);
+      return errorLogic(error);
     } else {
       setError(getErrorMessage(error));
     }

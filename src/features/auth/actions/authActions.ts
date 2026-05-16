@@ -18,7 +18,7 @@ export const loginAction = async (data: {
   password: string
 }) => {
   const { authSuccess, authFailed, setError } = useAppStore.getState();
-  asyncHandler(
+  return asyncHandler(
     async () => {
       const tokens = await authApi.login(data);
 
@@ -40,7 +40,7 @@ export const loginAction = async (data: {
 export const getMeAction = async () => {
   const { setUser, clearUser, setError } = useAppStore.getState();
 
-  asyncHandler(
+  return asyncHandler(
     async () => {
       const user = await authApi.getMe();
       setUser(user.data);
@@ -59,7 +59,7 @@ export const registerAction = async (data: {
   password: string
 }) => {
   const { authSuccess, authFailed, setError } = useAppStore.getState();
-  asyncHandler(
+  return asyncHandler(
     async () => {
       const tokens = await authApi.register(data);
 
