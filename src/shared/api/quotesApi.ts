@@ -10,9 +10,10 @@ export const quotesApi = {
     ),
 
   fetchQuotes: (
-    { offset, limit }: {
-      offset: number;
-      limit: number
-    }) =>
+    offset: number,
+    limit: number
+  ) =>
     api.get<Quote[]>(`/Quote/${offset}/${limit}`),
+
+  fetchQuotesCount: () => api.get<number>("/Quote/TotalQuotes"),
 };
