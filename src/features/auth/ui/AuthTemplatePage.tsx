@@ -3,7 +3,7 @@ import { CustomForm } from "@/shared/ui/CustomForm";
 import { InputTextField } from "@/shared/ui/InputTextField";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
 import { Typography } from "@mui/material";
-import { Link } from "next/link";
+import  Link from "next/link";
 
 type AuthTemplatePageProps<T extends FieldValues> = {
   title: string;
@@ -58,7 +58,7 @@ export default function AuthTemplatePage<T extends FieldValues>({
       </CustomForm>
       <Typography sx={{ mt: 2 }}>
         {switchText}{" "}
-        <Link to={switchTo} >{switchLinkText}</Link>
+        <Link href={switchTo} >{switchLinkText}</Link>
       </Typography>
     </GridBackGroundLayout >
   );
