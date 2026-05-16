@@ -1,16 +1,19 @@
+"use client";
 import { AppBar, Toolbar, Button, Box, useTheme, IconButton } from "@mui/material";
-import { Link } from "react-router-dom";
-import { navRouters } from "../routes";
+import Link from "next/link";
 import { useContext } from "react";
-import { ColorModeContext } from "../App";
 import LightModeIcon from "@mui/icons-material/LightMode"
-import DarkModeIcon from "@mui/icons-material/LightMode"
-import { useAppSelector } from "../store/hooks";
+import DarkModeIcon from "@mui/icons-material/DarkMode"
+import { useAppStore } from "@/shared/store";
+import { ColorModeContext } from "@/shared/theme/types";
+import { usePathname } from "next/navigation";
+import { navLinks } from "@/shared/config/nav";
 
 export default function NavBar() {
   const { toggleTheme } = useContext(ColorModeContext);
-  const isAuth = useAppSelector((state) => state.user.isAuth);
+  const isAuth = useAppStore((state) => state.isAuth);
 
+  const pathname = usePathname();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
 
@@ -33,21 +36,24 @@ export default function NavBar() {
         }}
       >
         <Toolbar sx={{ gap: 2 }}>
-          {navRouters
-            .filter((route) => !route.isPrivate || isAuth)
-            .map((route) => (
-            <Button
-              key={route.path}
-              component={Link}
-              to={route.path}
-              sx={{
-                color: theme.palette.text.primary,
-                background: theme.palette.background.paper
-              }}
-            >
-              {route.label}
-            </Button>
-          ))}
+          {navLinks
+            .filter((link) => !link.isPrivate || isAuth)
+            .map((link) => {
+              const isActive = pathname === link.path;
+              return (
+                <Button
+                  key={link.path}
+                  component={Link}
+                  href={link.path}
+                  sx={{
+                    color: isActive ? theme.palette.secondary.main : theme.palette.text.primary,
+                    background: theme.palette.background.paper
+                  }}
+                >
+                  {link.label}
+                </Button>
+              )
+            })}
           <IconButton onClick={toggleTheme}>
             {isDark ? <LightModeIcon /> : <DarkModeIcon />}
           </IconButton>
