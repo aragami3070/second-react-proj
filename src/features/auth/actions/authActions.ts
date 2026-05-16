@@ -77,3 +77,23 @@ export const registerAction = async (data: {
     }
   )
 }
+
+export const refreshAction = async () => {
+  return asyncHandler(
+    async () => {
+      if (typeof window !== "undefined") {
+        const oldRefreshToken = sessionStorage.getItem("refreshToken");
+
+        const res = await authApi.refresh(oldRefreshToken ?? "");
+        sessionStorage.setItem("refreshToken", res.data.refreshToken);
+        sessionStorage.setItem("accessToken", res.data.accessToken);
+
+        return true;
+      }
+    },
+    (_) => {
+      logoutAction();
+      return false
+    }
+  )
+}
