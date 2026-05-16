@@ -1,11 +1,11 @@
+"use client";
 import { useForm, type RegisterOptions, type SubmitHandler } from "react-hook-form";
-import { CustomForm } from "../ui/CustomForm";
-import { InputTextField } from "../ui/InputTextField";
-import { GridBackGroundLayout } from "../ui/GridBackGroundLayout";
+import { CustomForm } from "@/shared/ui/CustomForm";
+import { InputTextField } from "@/shared/ui/InputTextField";
+import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
 import { Typography } from "@mui/material";
-import { useAppDispatch } from "../store/hooks";
-import { createQuote } from "../store/quote";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import { createQuoteAction } from "@/features/quotes/actions/quotesActions";
 
 export default function CreateQuote() {
   const {
@@ -14,13 +14,11 @@ export default function CreateQuote() {
     formState: { errors },
   } = useForm<QuoteFormValue>();
 
-  const dispatch = useAppDispatch();
-
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<QuoteFormValue> = async (data) => {
-    await dispatch(createQuote(data.text));
-    navigate("/quotes")
+    await createQuoteAction(data.text);
+    router.push("/quotes")
   };
 
   return (
