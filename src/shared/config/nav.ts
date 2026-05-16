@@ -5,3 +5,6 @@ export const navLinks = [
   { label: "Лента цитат", path: "/quotes", isPrivate: true },
   { label: "Лучшее", path: "/random-quotes", isPrivate: true },
 ];
+
+export const privateRoutes = ["/profile", "/create-quote", "/quotes", "/random-quotes"];
+export const guestRoutes = ["/login", "/register"];
