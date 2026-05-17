@@ -29,7 +29,7 @@ export const QuoteCard = ({ quote }: { quote: Quote }) => {
           </Typography>
 
           <Typography variant="body1" color="text.secondary">
-            {new Date(quote.creationDate).toLocaleDateString()}
+            {quote.creationDate}
           </Typography>
         </Box>
       </CardContent>
