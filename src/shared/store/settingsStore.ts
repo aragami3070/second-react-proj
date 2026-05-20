@@ -10,7 +10,7 @@ export type SettingsState = {
   clearError: () => void;
 };
 
-export const createSettingsSlice: StateCreator<SettingsState> = (set) => ({
+export const createSettingsStore: StateCreator<SettingsState> = (set) => ({
   isLoading: false,
   isErrorModalOpen: false,
   error: null,

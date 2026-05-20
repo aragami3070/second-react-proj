@@ -1,12 +1,12 @@
 import { create } from 'zustand';
-import { createSettingsSlice, type SettingsState } from './settingsSlice';
-import { createQuoteSlice, type QuoteState } from './quoteSlice';
-import { createUserSlice, type UserState } from './userSlice';
+import { createSettingsStore, type SettingsState } from './settingsStore';
+import { createQuoteStore, type QuoteState } from './quoteStore';
+import { createUserStore, type UserState } from './userStore';
 
 export type RootState = SettingsState & QuoteState & UserState;
 
 export const useAppStore = create<RootState>()((...a) => ({
-  ...createSettingsSlice(...a),
-  ...createQuoteSlice(...a),
-  ...createUserSlice(...a),
+  ...createSettingsStore(...a),
+  ...createQuoteStore(...a),
+  ...createUserStore(...a),
 }));

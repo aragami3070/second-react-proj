@@ -12,7 +12,7 @@ export interface UserState {
   clearUser: () => void;
 }
 
-export const createUserSlice: StateCreator<UserState> = (set) => ({
+export const createUserStore: StateCreator<UserState> = (set) => ({
   user: null,
   isAuth: false,
   isUserLoaded: false,

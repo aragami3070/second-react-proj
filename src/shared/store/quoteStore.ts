@@ -12,7 +12,7 @@ export interface QuoteState {
   setRandomQuote: (quote: Quote) => void;
 }
 
-export const createQuoteSlice: StateCreator<QuoteState> = (set) => ({
+export const createQuoteStore: StateCreator<QuoteState> = (set) => ({
   quotes: [],
   randomQuote: null,
   offset: 0,
