@@ -5,32 +5,41 @@ import { darkTheme, lightTheme } from '@/shared/theme/theme';
 import { CommonWrapper } from '@/widgets/CommonWrapper/CommonWrapper';
 import { useEffect, useState } from 'react';
 import { ColorModeContext } from '@/shared/theme/types';
-import { CssBaseline } from '@mui/material';
+import { CssBaseline, useMediaQuery } from '@mui/material';
 
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
-  // Загружаем из localStorage при старте, по умолчанию true
-  const [darkMode, setDarkMode] = useState(() => {
-    try {
-      const saved = localStorage.getItem('darkMode');
-      return saved ? JSON.parse(saved) : true;
-    } catch {
-      return true;
-    }
-  });
+  // Узнаем системную тему пользователя
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
+  // Инициализируем стейт безопасно для SSR (по умолчанию светлая, переопределим на клиенте)
+  const [isDark, setIsDark] = useState(false);
+
+  // Вычисляем правильную тему только после загрузки в браузере
   useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-  }, [darkMode]);
+    const saved = localStorage.getItem('darkMode');
+
+    if (saved !== null) {
+      // Если пользователь уже нажимал на кнопку и выбирал тему — ставим её
+      setIsDark(JSON.parse(saved));
+    } else {
+      // Если выбора в localStorage нет — используем системную тему браузера
+      setIsDark(prefersDarkMode);
+    }
+  }, [prefersDarkMode]); // Реагирует, если пользователь переключит тему в самой ОС
 
   const toggleTheme = () => {
-    setDarkMode((prev: boolean) => !prev)
-  }
+    setIsDark((prev) => {
+      const newTheme = !prev;
+      localStorage.setItem('darkMode', JSON.stringify(newTheme));
+      return newTheme;
+    });
+  };
 
   return (
     <AppRouterCacheProvider>
       <ColorModeContext.Provider value={{ toggleTheme }}>
-        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+        <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
           <CssBaseline />
           <CommonWrapper>
             {children}
