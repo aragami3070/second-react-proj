@@ -1,0 +1,8 @@
+User-Agent: *
+Allow: /
+Disallow: /profile/
+Disallow: /quotes/
+Disallow: /random-quote/
+Disallow: /create-quote/
+
+Sitemap: http://localhost:3000/sitemap.xml
