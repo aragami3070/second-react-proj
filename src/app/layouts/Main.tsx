@@ -9,24 +9,21 @@ import { CssBaseline, useMediaQuery } from '@mui/material';
 
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
-  // Узнаем системную тему пользователя
+  // Узнаем системную тему
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-  // Инициализируем стейт безопасно для SSR (по умолчанию светлая, переопределим на клиенте)
   const [isDark, setIsDark] = useState(false);
-
-  // Вычисляем правильную тему только после загрузки в браузере
   useEffect(() => {
     const saved = localStorage.getItem('darkMode');
 
     if (saved !== null) {
-      // Если пользователь уже нажимал на кнопку и выбирал тему — ставим её
+      // Если уже была нажата на кнопка => пользователь выбирал тему - ставим её
       setIsDark(JSON.parse(saved));
     } else {
-      // Если выбора в localStorage нет — используем системную тему браузера
+      // Если выбора в localStorage нет - используем системную тему браузера
       setIsDark(prefersDarkMode);
     }
-  }, [prefersDarkMode]); // Реагирует, если пользователь переключит тему в самой ОС
+  }, [prefersDarkMode]);
 
   const toggleTheme = () => {
     setIsDark((prev) => {
