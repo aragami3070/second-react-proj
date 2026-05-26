@@ -10,19 +10,13 @@ export const metadata: Metadata = {
   },
   description: "Лучшая коллекция мемных цитат из фильмов и сериалов.",
   manifest: "/manifest.json",
+  icons: { icon: '/icon.svg' },
 
   openGraph: {
     title: "Цитаты Дня",
     description: "Лучшая коллекция мемных цитат",
     url: "http://localhost:3000",
     siteName: "Quotes of the Day",
-    images: [
-      {
-        url: "http://localhost:3000/og-image.jpg",
-        width: 1200,
-        height: 630,
-      },
-    ],
     locale: "ru_RU",
     type: "website",
   },
