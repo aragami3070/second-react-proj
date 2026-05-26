@@ -3,22 +3,20 @@ import { useEffect } from "react";
 import { Stack, Button } from "@mui/material";
 import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
-import { useAppStore } from "@/shared/store";
-import { fetchRandomQuoteAction } from "@/features/quotes/actions/quotesActions";
+import { useAppStore } from "@/shared/store/useAppStore";
+import { StoreLocator } from "@/shared/store/rootStore";
 
 export function RandomQuotePage() {
-  const randomQuote = useAppStore((state) => state.randomQuote);
+  const randomQuote = useAppStore((state) => state.quote.randomQuote);
+  const { fetchRandomQuote } = StoreLocator.get().quote.async;
+
+  const getRandomQuote = async () => {
+    await fetchRandomQuote();
+  };
 
   useEffect(() => {
-    const getRandomQuote = async () => {
-      await fetchRandomQuoteAction();
-    };
     getRandomQuote()
   }, []);
-
-  const handleRefresh = async () => {
-    await fetchRandomQuoteAction();
-  };
 
   return (
     <GridBackGroundLayout>
@@ -30,7 +28,7 @@ export function RandomQuotePage() {
       >
         {randomQuote && <QuoteCard quote={randomQuote} />}
 
-        <Button variant="contained" onClick={handleRefresh}>
+        <Button variant="contained" onClick={getRandomQuote}>
           Удиви меня
         </Button>
       </Stack>

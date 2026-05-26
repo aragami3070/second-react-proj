@@ -2,11 +2,11 @@
 import type { ReactNode } from "react";
 import { CircularProgress, Box } from "@mui/material";
 import { ErrorModal } from "@/widgets/ErrorModal/ErrorModal";
-import { useAppStore } from "@/shared/store";
+import { useAppStore } from "@/shared/store/useAppStore";
 
 
 export const CommonWrapper = ({ children }: { children: ReactNode }) => {
-  const isLoading = useAppStore((state) => state.isLoading);
+  const isLoading = useAppStore((state) => state.settings.isLoading);
 
   return (
     <Box sx={{ position: "relative" }}>

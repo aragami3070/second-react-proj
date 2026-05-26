@@ -3,34 +3,35 @@ import { useEffect } from "react";
 import { Box, Pagination, Stack } from "@mui/material";
 import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
-import { useAppStore } from "@/shared/store";
+import { useAppStore } from "@/shared/store/useAppStore";
 import { useShallow } from "zustand/shallow";
-import { fetchQuotesAction } from "@/features/quotes/actions/quotesActions";
+import { StoreLocator } from "@/shared/store/rootStore";
 
 
 export const QuotesPage = () => {
   const { quotes, offset, limit, total } = useAppStore(
     useShallow((state) => ({
-      quotes: state.quotes,
-      offset: state.offset,
-      limit: state.limit,
-      total: state.total
+      quotes: state.quote.quotes,
+      offset: state.quote.offset,
+      limit: state.quote.limit,
+      total: state.quote.total
     }))
   );
+  const { fetchQuotes } = StoreLocator.get().quote.async;
 
   const page = Math.floor(offset / limit) + 1;
   const pageCount = Math.ceil(total / limit);
 
   useEffect(() => {
     const getQuotes = async () => {
-      await fetchQuotesAction(offset, limit);
+      await fetchQuotes(offset, limit);
     };
     getQuotes()
   }, []);
 
   const handlePageChange = async (_: React.ChangeEvent<unknown>, value: number) => {
     const newOffset = (value - 1) * limit;
-    await fetchQuotesAction(newOffset, limit);
+    await fetchQuotes(newOffset, limit);
   };
 
   return (

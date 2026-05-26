@@ -4,14 +4,14 @@ import Link from "next/link";
 import { useContext } from "react";
 import LightModeIcon from "@mui/icons-material/LightMode"
 import DarkModeIcon from "@mui/icons-material/DarkMode"
-import { useAppStore } from "@/shared/store";
+import { useAppStore } from "@/shared/store/useAppStore";
 import { ColorModeContext } from "@/shared/theme/types";
 import { usePathname } from "next/navigation";
 import { navLinks } from "@/shared/config/nav";
 
 export default function NavBar() {
   const { toggleTheme } = useContext(ColorModeContext);
-  const isAuth = useAppStore((state) => state.isAuth);
+  const isAuth = useAppStore((state) => state.user.isAuth);
 
   const pathname = usePathname();
   const theme = useTheme();

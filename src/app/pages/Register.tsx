@@ -3,17 +3,17 @@ import type { SubmitHandler } from "react-hook-form";
 import type { AuthFieldConfig } from "@/features/auth/ui/AuthTemplatePage";
 import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
 import { useRouter } from "next/navigation"
-import { useAppStore } from "@/shared/store";
-import { registerAction } from "@/features/auth/actions/authActions";
+import { useAppStore } from "@/shared/store/useAppStore";
 import { useShallow } from "zustand/shallow";
 import { useEffect } from "react";
+import { StoreLocator } from "@/shared/store/rootStore";
 
 export default function RegisterPage() {
   const router = useRouter();
   const { isAuth, isUserLoaded } = useAppStore(
     useShallow((state) => ({
-      isAuth: state.isAuth,
-      isUserLoaded: state.isUserLoaded
+      isAuth: state.user.isAuth,
+      isUserLoaded: state.user.isUserLoaded
     }))
   );
 
@@ -24,7 +24,8 @@ export default function RegisterPage() {
   }, [isAuth, isUserLoaded])
 
   const onSubmit: SubmitHandler<RegisterFormValues> = async (data: RegisterFormValues) => {
-    await registerAction({
+    const { register } = StoreLocator.get().user.async;
+    await register({
       firstName: data.firstName,
       secondName: data.secondName,
       email: data.email,

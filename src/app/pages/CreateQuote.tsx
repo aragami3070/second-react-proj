@@ -5,7 +5,7 @@ import { InputTextField } from "@/shared/ui/InputTextField";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { createQuoteAction } from "@/features/quotes/actions/quotesActions";
+import { StoreLocator } from "@/shared/store/rootStore";
 
 export default function CreateQuote() {
   const {
@@ -17,7 +17,8 @@ export default function CreateQuote() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<QuoteFormValue> = async (data) => {
-    await createQuoteAction(data.text);
+    const { createQuote } = StoreLocator.get().quote.async;
+    await createQuote(data.text);
     router.push("/quotes")
   };
 

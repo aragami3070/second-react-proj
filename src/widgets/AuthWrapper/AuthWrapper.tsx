@@ -2,12 +2,12 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation"
 import { usePathname } from "next/navigation";
-import { useAppStore } from "@/shared/store";
-import { refreshOnStartAction } from "@/features/auth/actions/authActions";
+import { useAppStore } from "@/shared/store/useAppStore";
 import { guestRoutes, privateRoutes } from "@/shared/config/nav";
+import { StoreLocator } from "@/shared/store/rootStore";
 
 export const AuthWrapper = ({ children }: { children: ReactNode }) => {
-  const isAuthInitialized = useAppStore((state) => state.isAuthInitialized);
+  const isAuthInitialized = useAppStore((state) => state.user.isAuthInitialized);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -24,20 +24,21 @@ export const AuthWrapper = ({ children }: { children: ReactNode }) => {
 
     const tryInitRefresh = async () => {
       if (!isAuthInitialized) {
-        await refreshOnStartAction();
+        const { refreshOnStart } = StoreLocator.get().user.async;
+        await refreshOnStart();
       }
     };
     tryInitRefresh();
   }, [isAuthInitialized]);
+
+  const isPrivate = privateRoutes.includes(pathname ?? "");
+  const isGuest = guestRoutes.includes(pathname ?? "");
 
   // Эффект для редиректов
   useEffect(() => {
     if (!isMounted) return; // Ждем окончания SSR
 
     const refreshToken = sessionStorage.getItem("refreshToken");
-    const isPrivate = privateRoutes.includes(pathname ?? "");
-    const isGuest = guestRoutes.includes(pathname ?? "");
-
     if (isPrivate && !refreshToken) {
       router.push("/login");
     } else if (isGuest && refreshToken) {
@@ -48,8 +49,6 @@ export const AuthWrapper = ({ children }: { children: ReactNode }) => {
   const refreshToken = typeof window !== "undefined"
     ? sessionStorage.getItem("refreshToken")
     : null;
-  const isPrivate = privateRoutes.includes(pathname ?? "");
-  const isGuest = guestRoutes.includes(pathname ?? "");
 
   // Пока идет SSR или перенаправление блокируем показ приватного контента
   if (!isMounted || (isPrivate && !refreshToken) || (isGuest && refreshToken)) {

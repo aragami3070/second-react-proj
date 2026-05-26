@@ -1,8 +1,8 @@
 "use client"
-import { useAppStore } from "@/shared/store";
 import { getErrorMessage } from "@/shared/utils/errorTemplateMessage";
 import type { AxiosError } from "axios";
 import type { ApiError } from "@/shared/api/type";
+import { StoreLocator } from "../store/rootStore";
 
 export const asyncHandler = async <T>(
   // Замыкание с основной логикой
@@ -12,7 +12,7 @@ export const asyncHandler = async <T>(
   // Флаг, если нужен тихий запрос без лоадера
   silent: boolean = false
 ) => {
-  const { startLoading, stopLoading, setError } = useAppStore.getState();
+  const { startLoading, stopLoading, setError } = StoreLocator.get().settings.sync;
 
   try {
     if (!silent) startLoading();

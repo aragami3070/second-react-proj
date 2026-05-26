@@ -2,9 +2,9 @@
 import type { SubmitHandler } from "react-hook-form";
 import type { AuthFieldConfig } from "@/features/auth/ui/AuthTemplatePage";
 import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
-import { useAppStore } from "@/shared/store";
+import { useAppStore } from "@/shared/store/useAppStore";
+import { StoreLocator } from '@/shared/store/rootStore';
 import { useRouter } from "next/navigation"
-import { loginAction } from "@/features/auth/actions/authActions";
 import { useShallow } from "zustand/shallow";
 import { useEffect } from "react";
 
@@ -12,8 +12,8 @@ export default function LoginPage() {
   const router = useRouter();
   const { isAuth, isUserLoaded } = useAppStore(
     useShallow((state) => ({
-      isAuth: state.isAuth,
-      isUserLoaded: state.isUserLoaded
+      isAuth: state.user.isAuth,
+      isUserLoaded: state.user.isUserLoaded
     }))
   );
 
@@ -24,7 +24,8 @@ export default function LoginPage() {
   }, [isAuth, isUserLoaded])
 
   const onSubmit: SubmitHandler<LoginFormValues> = async (data) => {
-    await loginAction({
+    const { login } = StoreLocator.get().user.async;
+    await login({
       email: data.email,
       password: data.password
     });

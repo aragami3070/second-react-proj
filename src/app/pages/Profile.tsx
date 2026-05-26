@@ -9,14 +9,14 @@ import {
   Divider,
   Button
 } from "@mui/material"
-import { useAppStore } from "@/shared/store"
+import { useAppStore } from "@/shared/store/useAppStore"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout"
-import { logoutAction } from "@/features/auth/actions/authActions"
+import { StoreLocator } from "@/shared/store/rootStore";
 
 export default function ProfilePage() {
-  const user = useAppStore((state) => state.user);
+  const user = useAppStore((state) => state.user.user);
   const router = useRouter();
 
   if (!user) {
@@ -28,7 +28,8 @@ export default function ProfilePage() {
   }
 
   const handleLogout = () => {
-    logoutAction();
+    const { logout } = StoreLocator.get().user.async;
+    logout();
     router.push("/login");
   }
 

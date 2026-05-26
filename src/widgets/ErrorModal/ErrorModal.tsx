@@ -7,19 +7,20 @@ import {
   Button,
   Typography
 } from "@mui/material";
-import { useAppStore } from "@/shared/store";
+import { useAppStore } from "@/shared/store/useAppStore";
 import { useShallow } from "zustand/shallow";
+import { StoreLocator } from "@/shared/store/rootStore";
 
 export const ErrorModal = () => {
-  const { error, isErrorModalOpen, clearError } = useAppStore(
+  const { error, isErrorModalOpen } = useAppStore(
     useShallow((state) => ({
-      error: state.error,
-      isErrorModalOpen: state.isErrorModalOpen,
-      clearError: state.clearError
+      error: state.settings.error,
+      isErrorModalOpen: state.settings.isErrorModalOpen,
     }))
   );
 
   const handleClose = () => {
+    const { clearError } = StoreLocator.get().settings.sync;
     clearError();
   };
 
