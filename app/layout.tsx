@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   },
   description: "Лучшая коллекция мемных цитат из фильмов и сериалов.",
   manifest: "/manifest.json",
-  icons: { icon: '/icon.svg' },
+  icons: { icon: '/favicon.svg' },
 
   openGraph: {
     title: "Цитаты Дня",

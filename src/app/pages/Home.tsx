@@ -8,7 +8,7 @@ export default function HomePage() {
     <>
       <GridBackGroundLayout sx={{ minWidth: '100vw' }}>
         <Img
-          src="/icon.svg"
+          src="/favicon.svg"
           sx={{
             width: 100,
             height: 100,
