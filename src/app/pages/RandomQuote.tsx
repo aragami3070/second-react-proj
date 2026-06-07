@@ -4,11 +4,10 @@ import { Stack, Button } from "@mui/material";
 import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
 import { StoreLocator } from "@/shared/store";
-import { useStore } from "zustand";
+import { observer } from "mobx-react-lite";
 
-export function RandomQuotePage() {
-  const store = StoreLocator.get().store;
-  const randomQuote = useStore(store,(state) => state.quote.randomQuote);
+export const RandomQuotePage = observer(() => {
+  const randomQuote = StoreLocator.get().quote.state.randomQuote;
   const { fetchRandomQuote } = StoreLocator.get().quote.async;
 
   const getRandomQuote = async () => {
@@ -35,4 +34,4 @@ export function RandomQuotePage() {
       </Stack>
     </GridBackGroundLayout>
   );
-};
+});

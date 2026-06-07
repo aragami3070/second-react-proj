@@ -1,53 +1,32 @@
-import type { StoreApi } from 'zustand/vanilla';
-import type { RootState } from '../../types';
 import type { User } from '@/entities/user/types';
+import { UserState } from './userState';
 
 export class UserSync {
-  constructor(private store: StoreApi<RootState>) { }
+  constructor(private state: UserState) { }
 
   authSuccess = (): void => {
-    this.store.setState((prev) => ({
-      user: {
-        ...prev.user,
-        isAuth: true,
-        isUserLoaded: false,
-        isAuthInitialized: true,
-      }
-    }));
+    this.state.isAuth = true;
+    this.state.isUserLoaded = false;
+    this.state.isAuthInitialized = true;
   }
 
   authFailed = (): void => {
-    this.store.setState((prev) => ({
-      user: {
-        ...prev.user,
-        isAuth: false,
-        isUserLoaded: false,
-        isAuthInitialized: true,
-      }
-    }));
+    this.state.isAuth = false;
+    this.state.isUserLoaded = false;
+    this.state.isAuthInitialized = true;
   }
 
   setUser = (user: User): void => {
-    this.store.setState((prev) => ({
-      user: {
-        ...prev.user,
-        user,
-        isUserLoaded: true,
-        isAuth: true,
-        isAuthInitialized: true,
-      }
-    }));
+    this.state.user = user;
+    this.state.isUserLoaded = true;
+    this.state.isAuth = true;
+    this.state.isAuthInitialized = true;
   }
 
   clearUser = (): void => {
-    this.store.setState((prev) => ({
-      user: {
-        ...prev.user,
-        user: null,
-        isUserLoaded: false,
-        isAuth: false,
-        isAuthInitialized: true,
-      }
-    }));
+    this.state.user = null;
+    this.state.isUserLoaded = false;
+    this.state.isAuth = false;
+    this.state.isAuthInitialized = true;
   }
 }

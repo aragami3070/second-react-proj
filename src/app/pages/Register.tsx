@@ -3,20 +3,13 @@ import type { SubmitHandler } from "react-hook-form";
 import type { AuthFieldConfig } from "@/features/auth/ui/AuthTemplatePage";
 import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
 import { useRouter } from "next/navigation"
-import { useShallow } from "zustand/shallow";
 import { useEffect } from "react";
 import { StoreLocator } from "@/shared/store";
-import { useStore } from "zustand";
+import { observer } from "mobx-react-lite";
 
-export default function RegisterPage() {
+export default observer(function RegisterPage() {
   const router = useRouter();
-  const store = StoreLocator.get().store;
-  const { isAuth, isUserLoaded } = useStore(store,
-    useShallow((state) => ({
-      isAuth: state.user.isAuth,
-      isUserLoaded: state.user.isUserLoaded
-    }))
-  );
+  const { isAuth, isUserLoaded } = StoreLocator.get().user.state;
 
   useEffect(() => {
     if (isAuth && isUserLoaded) {
@@ -47,7 +40,7 @@ export default function RegisterPage() {
       />
     </>
   );
-}
+});
 
 type RegisterFormValues = {
   firstName: string;

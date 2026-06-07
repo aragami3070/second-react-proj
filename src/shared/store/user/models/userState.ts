@@ -1,12 +1,13 @@
-import type { UserStateData } from '../types';
+import { makeAutoObservable } from 'mobx';
+import type { User } from '@/entities/user/types';
 
 export class UserState {
-  public readonly initial: UserStateData = {
-    user: null,
-    isAuth: false,
-    isUserLoaded: false,
-    isAuthInitialized: false,
-  };
-}
+  user: User | null = null;
+  isAuth = false;
+  isUserLoaded = false;
+  isAuthInitialized = false;
 
-export const initUser = new UserState().initial;
+  constructor() {
+    makeAutoObservable(this);
+  }
+}

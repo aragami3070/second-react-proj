@@ -13,11 +13,10 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout"
 import { StoreLocator } from "@/shared/store";
-import { useStore } from "zustand";
+import { observer } from "mobx-react-lite";
 
-export default function ProfilePage() {
-  const store = StoreLocator.get().store;
-  const user = useStore(store, (state) => state.user.user);
+export default observer(function ProfilePage() {
+  const user = StoreLocator.get().user.state.user;
   const router = useRouter();
 
   if (!user) {
@@ -115,4 +114,4 @@ export default function ProfilePage() {
       </Container>
     </GridBackGroundLayout>
   )
-}
+});

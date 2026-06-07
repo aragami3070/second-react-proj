@@ -3,21 +3,12 @@ import { useEffect } from "react";
 import { Box, Pagination, Stack } from "@mui/material";
 import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
-import { useShallow } from "zustand/shallow";
 import { StoreLocator } from "@/shared/store";
-import { useStore } from "zustand";
+import { observer } from "mobx-react-lite";
 
 
-export const QuotesPage = () => {
-  const store = StoreLocator.get().store;
-  const { quotes, offset, limit, total } = useStore(store,
-    useShallow((state) => ({
-      quotes: state.quote.quotes,
-      offset: state.quote.offset,
-      limit: state.quote.limit,
-      total: state.quote.total
-    }))
-  );
+export const QuotesPage = observer(() => {
+  const { quotes, offset, limit, total } = StoreLocator.get().quote.state;
   const { fetchQuotes } = StoreLocator.get().quote.async;
 
   const page = Math.floor(offset / limit) + 1;
@@ -56,4 +47,4 @@ export const QuotesPage = () => {
       </Stack>
     </GridBackGroundLayout>
   );
-};
+});

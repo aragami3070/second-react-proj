@@ -1,11 +1,11 @@
-import { SettingsStateData } from '../types';
+import { makeAutoObservable } from 'mobx';
 
 export class SettingsState {
-  public readonly initial: SettingsStateData = {
-    isLoading: false,
-    isErrorModalOpen: false,
-    error: null,
-  };
-}
+  isLoading = false;
+  isErrorModalOpen = false;
+  error: string | null = null;
 
-export const initSettings = new SettingsState().initial;
+  constructor() {
+    makeAutoObservable(this);
+  }
+}

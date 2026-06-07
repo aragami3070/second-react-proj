@@ -1,30 +1,23 @@
-import type { StoreApi } from 'zustand/vanilla';
-import type { RootState } from '../../types';
+import { SettingsState } from './settingsState';
 
 export class SettingsSync {
-  constructor(private store: StoreApi<RootState>) { }
+  constructor(private state: SettingsState) { }
 
   startLoading = (): void => {
-    this.store.setState((prev) => ({
-      settings: { ...prev.settings, isLoading: true }
-    }));
+    this.state.isLoading = true;
   }
 
   stopLoading = (): void => {
-    this.store.setState((prev) => ({
-      settings: { ...prev.settings, isLoading: false }
-    }));
+    this.state.isLoading = false;
   }
 
   setError = (error: string): void =>  {
-    this.store.setState((prev) => ({
-      settings: { ...prev.settings, error, isErrorModalOpen: true }
-    }));
+    this.state.error = error;
+    this.state.isErrorModalOpen = true;
   }
 
   clearError = (): void => {
-    this.store.setState((prev) => ({
-      settings: { ...prev.settings, error: null, isErrorModalOpen: false }
-    }));
+    this.state.error = null;
+    this.state.isErrorModalOpen = false;
   }
 }

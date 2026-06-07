@@ -4,11 +4,10 @@ import { useRouter } from "next/navigation"
 import { usePathname } from "next/navigation";
 import { guestRoutes, privateRoutes } from "@/shared/config/nav";
 import { StoreLocator } from "@/shared/store";
-import { useStore } from "zustand";
+import { observer } from "mobx-react-lite";
 
-export const AuthWrapper = ({ children }: { children: ReactNode }) => {
-  const store = StoreLocator.get().store;
-  const isAuthInitialized = useStore(store,(state) => state.user.isAuthInitialized);
+export const AuthWrapper = observer(({ children }: { children: ReactNode }) => {
+  const isAuthInitialized = StoreLocator.get().user.state.isAuthInitialized;
   const router = useRouter();
   const pathname = usePathname();
 
@@ -57,4 +56,4 @@ export const AuthWrapper = ({ children }: { children: ReactNode }) => {
   }
 
   return <>{children}</>;
-};
+});

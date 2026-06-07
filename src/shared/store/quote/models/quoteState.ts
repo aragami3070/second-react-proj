@@ -1,13 +1,14 @@
-import type { QuoteStateData } from '../types';
+import { makeAutoObservable } from 'mobx';
+import type { Quote } from '@/entities/quote/types';
 
 export class QuoteState {
-  public readonly initial: QuoteStateData = {
-    quotes: [],
-    randomQuote: null,
-    offset: 0,
-    limit: 10,
-    total: 0,
-  };
-}
+  quotes: Quote[] = [];
+  randomQuote: Quote | null = null;
+  offset = 0;
+  limit = 10;
+  total = 0;
 
-export const initQuote = new QuoteState().initial;
+  constructor() {
+    makeAutoObservable(this);
+  }
+}

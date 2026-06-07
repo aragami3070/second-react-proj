@@ -4,19 +4,12 @@ import type { AuthFieldConfig } from "@/features/auth/ui/AuthTemplatePage";
 import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
 import { StoreLocator } from '@/shared/store';
 import { useRouter } from "next/navigation"
-import { useShallow } from "zustand/shallow";
+import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
-import { useStore } from "zustand";
 
-export default function LoginPage() {
-  const store = StoreLocator.get().store;
+export default observer(function LoginPage() {
   const router = useRouter();
-  const { isAuth, isUserLoaded } = useStore(store,
-    useShallow((state) => ({
-      isAuth: state.user.isAuth,
-      isUserLoaded: state.user.isUserLoaded
-    }))
-  );
+  const { isAuth, isUserLoaded } = StoreLocator.get().user.state;
 
   useEffect(() => {
     if (isAuth && isUserLoaded) {
@@ -46,7 +39,7 @@ export default function LoginPage() {
       />
     </>
   );
-}
+});
 
 type LoginFormValues = {
   email: string;

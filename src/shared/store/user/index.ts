@@ -1,15 +1,16 @@
-import type { StoreApi } from 'zustand/vanilla';
-import type { RootState } from '../types';
+import { UserState } from './models/userState';
 import { UserSync } from './models/userSync';
 import { UserAsync } from './models/userAsync';
 import { SettingsSync } from '../settings/models/settingsSync';
 
 export class UserStore {
+  public state: UserState;
   public sync: UserSync;
   public async: UserAsync;
 
-  constructor(private store: StoreApi<RootState>, settingsSync: SettingsSync) {
-    this.sync = new UserSync(store);
-    this.async= new UserAsync(this.sync, settingsSync);
+  constructor(settingsSync: SettingsSync) {
+    this.state = new UserState();
+    this.sync = new UserSync(this.state);
+    this.async = new UserAsync(this.sync, settingsSync);
   }
 }

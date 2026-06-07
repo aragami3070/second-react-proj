@@ -7,18 +7,11 @@ import {
   Button,
   Typography
 } from "@mui/material";
-import { useShallow } from "zustand/shallow";
 import { StoreLocator } from "@/shared/store";
-import { useStore } from "zustand";
+import { observer } from "mobx-react-lite";
 
-export const ErrorModal = () => {
-  const store = StoreLocator.get().store;
-  const { error, isErrorModalOpen } = useStore(store,
-    useShallow((state) => ({
-      error: state.settings.error,
-      isErrorModalOpen: state.settings.isErrorModalOpen,
-    }))
-  );
+export const ErrorModal = observer(() => {
+  const { error, isErrorModalOpen } = StoreLocator.get().settings.state;
 
   const handleClose = () => {
     const { clearError } = StoreLocator.get().settings.sync;
@@ -56,4 +49,4 @@ export const ErrorModal = () => {
       </DialogActions>
     </Dialog>
   );
-};
+});

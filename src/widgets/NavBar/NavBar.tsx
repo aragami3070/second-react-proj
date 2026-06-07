@@ -7,13 +7,12 @@ import DarkModeIcon from "@mui/icons-material/DarkMode"
 import { ColorModeContext } from "@/shared/theme/types";
 import { usePathname } from "next/navigation";
 import { navLinks } from "@/shared/config/nav";
-import { useStore } from "zustand";
 import { StoreLocator } from "@/shared/store";
+import { observer } from "mobx-react-lite";
 
-export default function NavBar() {
+export default observer(function NavBar() {
   const { toggleTheme } = useContext(ColorModeContext);
-  const store = StoreLocator.get().store;
-  const isAuth = useStore(store, (state) => state.user.isAuth);
+  const isAuth = StoreLocator.get().user.state.isAuth;
 
   const pathname = usePathname();
   const theme = useTheme();
@@ -63,4 +62,4 @@ export default function NavBar() {
       </AppBar>
     </Box>
   );
-}
+});

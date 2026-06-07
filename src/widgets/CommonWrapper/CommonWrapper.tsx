@@ -2,13 +2,12 @@
 import type { ReactNode } from "react";
 import { CircularProgress, Box } from "@mui/material";
 import { ErrorModal } from "@/widgets/ErrorModal/ErrorModal";
-import { useStore } from "zustand";
 import { StoreLocator } from "@/shared/store";
+import { observer } from "mobx-react-lite";
 
 
-export const CommonWrapper = ({ children }: { children: ReactNode }) => {
-  const store = StoreLocator.get().store;
-  const isLoading = useStore(store,(state) => state.settings.isLoading);
+export const CommonWrapper = observer(({ children }: { children: ReactNode }) => {
+  const isLoading = StoreLocator.get().settings.state.isLoading;
 
   return (
     <Box sx={{ position: "relative" }}>
@@ -43,4 +42,4 @@ export const CommonWrapper = ({ children }: { children: ReactNode }) => {
       )}
     </Box>
   );
-};
+});
