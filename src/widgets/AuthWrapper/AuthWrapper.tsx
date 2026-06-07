@@ -2,12 +2,13 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation"
 import { usePathname } from "next/navigation";
-import { useAppStore } from "@/shared/store/useAppStore";
 import { guestRoutes, privateRoutes } from "@/shared/config/nav";
-import { StoreLocator } from "@/shared/store/rootStore";
+import { StoreLocator } from "@/shared/store";
+import { useStore } from "zustand";
 
 export const AuthWrapper = ({ children }: { children: ReactNode }) => {
-  const isAuthInitialized = useAppStore((state) => state.user.isAuthInitialized);
+  const store = StoreLocator.get().store;
+  const isAuthInitialized = useStore(store,(state) => state.user.isAuthInitialized);
   const router = useRouter();
   const pathname = usePathname();
 

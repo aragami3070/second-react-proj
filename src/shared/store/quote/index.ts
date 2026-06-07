@@ -1,4 +1,3 @@
-// src/shared/store/quoteStore/quoteStore.ts
 import type { StoreApi } from 'zustand/vanilla';
 import type { RootState } from '../types';
 import { QuoteSync } from './models/quoteSync';

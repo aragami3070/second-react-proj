@@ -2,7 +2,7 @@
 import { getErrorMessage } from "@/shared/utils/errorTemplateMessage";
 import type { AxiosError } from "axios";
 import type { ApiError } from "@/shared/api/type";
-import { StoreLocator } from "../store/rootStore";
+import { StoreLocator } from "@/shared/store";
 
 export const asyncHandler = async <T>(
   // Замыкание с основной логикой

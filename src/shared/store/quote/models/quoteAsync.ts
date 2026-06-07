@@ -1,4 +1,3 @@
-// src/shared/store/quoteStore/models/quoteAsync.ts
 import { quotesApi } from "@/shared/api/quotesApi";
 import { asyncHandler } from "@/shared/utils/asyncHandler";
 import type { QuoteSync } from "./quoteSync";

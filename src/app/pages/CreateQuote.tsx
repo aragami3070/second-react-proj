@@ -5,7 +5,7 @@ import { InputTextField } from "@/shared/ui/InputTextField";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
 import { Typography } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { StoreLocator } from "@/shared/store/rootStore";
+import { StoreLocator } from "@/shared/store";
 
 export default function CreateQuote() {
   const {

@@ -7,12 +7,13 @@ import {
   Button,
   Typography
 } from "@mui/material";
-import { useAppStore } from "@/shared/store/useAppStore";
 import { useShallow } from "zustand/shallow";
-import { StoreLocator } from "@/shared/store/rootStore";
+import { StoreLocator } from "@/shared/store";
+import { useStore } from "zustand";
 
 export const ErrorModal = () => {
-  const { error, isErrorModalOpen } = useAppStore(
+  const store = StoreLocator.get().store;
+  const { error, isErrorModalOpen } = useStore(store,
     useShallow((state) => ({
       error: state.settings.error,
       isErrorModalOpen: state.settings.isErrorModalOpen,

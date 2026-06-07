@@ -9,14 +9,15 @@ import {
   Divider,
   Button
 } from "@mui/material"
-import { useAppStore } from "@/shared/store/useAppStore"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout"
-import { StoreLocator } from "@/shared/store/rootStore";
+import { StoreLocator } from "@/shared/store";
+import { useStore } from "zustand";
 
 export default function ProfilePage() {
-  const user = useAppStore((state) => state.user.user);
+  const store = StoreLocator.get().store;
+  const user = useStore(store, (state) => state.user.user);
   const router = useRouter();
 
   if (!user) {

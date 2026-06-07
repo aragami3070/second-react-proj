@@ -3,13 +3,14 @@ import { useEffect } from "react";
 import { Box, Pagination, Stack } from "@mui/material";
 import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
-import { useAppStore } from "@/shared/store/useAppStore";
 import { useShallow } from "zustand/shallow";
-import { StoreLocator } from "@/shared/store/rootStore";
+import { StoreLocator } from "@/shared/store";
+import { useStore } from "zustand";
 
 
 export const QuotesPage = () => {
-  const { quotes, offset, limit, total } = useAppStore(
+  const store = StoreLocator.get().store;
+  const { quotes, offset, limit, total } = useStore(store,
     useShallow((state) => ({
       quotes: state.quote.quotes,
       offset: state.quote.offset,

@@ -1,11 +1,11 @@
 import { createStore, type StoreApi } from 'zustand/vanilla';
 import { RootState } from './types';
-import { SettingsStore } from './settings/settingsStore';
+import { SettingsStore } from './settings';
 import { initSettings } from './settings/models/settingsState';
 import { initUser } from './user/models/userState';
-import { UserStore } from './user/userStore';
+import { UserStore } from './user';
 import { initQuote } from './quote/models/quoteState';
-import { QuoteStore } from './quote/quoteStore';
+import { QuoteStore } from './quote';
 
 export class RootStore {
   public store: StoreApi<RootState>;

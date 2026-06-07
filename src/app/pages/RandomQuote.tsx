@@ -3,11 +3,12 @@ import { useEffect } from "react";
 import { Stack, Button } from "@mui/material";
 import { QuoteCard } from "@/entities/quote/ui/QuoteCard";
 import { GridBackGroundLayout } from "@/shared/ui/GridBackGroundLayout";
-import { useAppStore } from "@/shared/store/useAppStore";
-import { StoreLocator } from "@/shared/store/rootStore";
+import { StoreLocator } from "@/shared/store";
+import { useStore } from "zustand";
 
 export function RandomQuotePage() {
-  const randomQuote = useAppStore((state) => state.quote.randomQuote);
+  const store = StoreLocator.get().store;
+  const randomQuote = useStore(store,(state) => state.quote.randomQuote);
   const { fetchRandomQuote } = StoreLocator.get().quote.async;
 
   const getRandomQuote = async () => {

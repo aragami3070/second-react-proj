@@ -2,15 +2,16 @@
 import type { SubmitHandler } from "react-hook-form";
 import type { AuthFieldConfig } from "@/features/auth/ui/AuthTemplatePage";
 import AuthTemplatePage from "@/features/auth/ui/AuthTemplatePage";
-import { useAppStore } from "@/shared/store/useAppStore";
-import { StoreLocator } from '@/shared/store/rootStore';
+import { StoreLocator } from '@/shared/store';
 import { useRouter } from "next/navigation"
 import { useShallow } from "zustand/shallow";
 import { useEffect } from "react";
+import { useStore } from "zustand";
 
 export default function LoginPage() {
+  const store = StoreLocator.get().store;
   const router = useRouter();
-  const { isAuth, isUserLoaded } = useAppStore(
+  const { isAuth, isUserLoaded } = useStore(store,
     useShallow((state) => ({
       isAuth: state.user.isAuth,
       isUserLoaded: state.user.isUserLoaded
