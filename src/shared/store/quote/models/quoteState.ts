@@ -11,4 +11,17 @@ export class QuoteState {
   constructor() {
     makeAutoObservable(this);
   }
+
+  setQuotes(quotes: Quote[], offset: number): void {
+    this.quotes = quotes;
+    this.offset = offset;
+  }
+
+  setTotal(total: number): void {
+    this.total = total;
+  }
+
+  setRandomQuote(randomQuote: Quote): void {
+    this.randomQuote = randomQuote;
+  }
 }

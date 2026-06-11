@@ -1,32 +1,31 @@
-import type { User } from '@/entities/user/types';
-import { UserState } from './userState';
+import { makeAutoObservable } from 'mobx';
+import type { UserState } from './userState';
 
 export class UserSync {
-  constructor(private state: UserState) { }
-
-  authSuccess = (): void => {
-    this.state.isAuth = true;
-    this.state.isUserLoaded = false;
-    this.state.isAuthInitialized = true;
+  constructor(private state: UserState) {
+    makeAutoObservable(this);
   }
 
-  authFailed = (): void => {
-    this.state.isAuth = false;
-    this.state.isUserLoaded = false;
-    this.state.isAuthInitialized = true;
+  get user() {
+    return this.state.user;
   }
 
-  setUser = (user: User): void => {
-    this.state.user = user;
-    this.state.isUserLoaded = true;
-    this.state.isAuth = true;
-    this.state.isAuthInitialized = true;
+  get isAuth(): boolean {
+    return this.state.isAuth;
   }
 
-  clearUser = (): void => {
-    this.state.user = null;
-    this.state.isUserLoaded = false;
-    this.state.isAuth = false;
-    this.state.isAuthInitialized = true;
+  get isUserLoaded(): boolean {
+    return this.state.isUserLoaded;
+  }
+
+  get isAuthInitialized(): boolean {
+    return this.state.isAuthInitialized;
+  }
+
+  reset(): void {
+    this.state.setUser(null);
+    this.state.setIsAuth(false);
+    this.state.setIsUserLoaded(false);
+    this.state.setIsAuthInitialized(true);
   }
 }

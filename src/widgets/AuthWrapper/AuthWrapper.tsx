@@ -7,7 +7,7 @@ import { StoreLocator } from "@/shared/store";
 import { observer } from "mobx-react-lite";
 
 export const AuthWrapper = observer(({ children }: { children: ReactNode }) => {
-  const isAuthInitialized = StoreLocator.get().user.state.isAuthInitialized;
+  const isAuthInitialized = StoreLocator.get().user.sync.isAuthInitialized;
   const router = useRouter();
   const pathname = usePathname();
 

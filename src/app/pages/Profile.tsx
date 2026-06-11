@@ -16,7 +16,7 @@ import { StoreLocator } from "@/shared/store";
 import { observer } from "mobx-react-lite";
 
 export default observer(function ProfilePage() {
-  const user = StoreLocator.get().user.state.user;
+  const user = StoreLocator.get().user.sync.user;
   const router = useRouter();
 
   if (!user) {

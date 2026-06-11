@@ -1,4 +1,4 @@
-import type { User } from '@/entities/user/types';
+import type { User } from "@/entities/user/types";
 
 export type UserStateData = {
   user: User | null;

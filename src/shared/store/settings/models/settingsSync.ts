@@ -1,23 +1,24 @@
-import { SettingsState } from './settingsState';
+import { makeAutoObservable } from 'mobx';
+import type { SettingsState } from './settingsState';
 
 export class SettingsSync {
-  constructor(private state: SettingsState) { }
-
-  startLoading = (): void => {
-    this.state.isLoading = true;
+  constructor(private state: SettingsState) {
+    makeAutoObservable(this);
   }
 
-  stopLoading = (): void => {
-    this.state.isLoading = false;
+  get isLoading(): boolean {
+    return this.state.isLoading;
   }
 
-  setError = (error: string): void =>  {
-    this.state.error = error;
-    this.state.isErrorModalOpen = true;
+  get isErrorModalOpen(): boolean {
+    return this.state.isErrorModalOpen;
   }
 
-  clearError = (): void => {
-    this.state.error = null;
-    this.state.isErrorModalOpen = false;
+  get error(): string | null {
+    return this.state.error;
+  }
+
+  clearError(): void {
+    this.state.clearError();
   }
 }

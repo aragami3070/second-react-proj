@@ -12,7 +12,7 @@ import { observer } from "mobx-react-lite";
 
 export default observer(function NavBar() {
   const { toggleTheme } = useContext(ColorModeContext);
-  const isAuth = StoreLocator.get().user.state.isAuth;
+  const isAuth = StoreLocator.get().user.sync.isAuth;
 
   const pathname = usePathname();
   const theme = useTheme();

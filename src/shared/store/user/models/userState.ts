@@ -10,4 +10,20 @@ export class UserState {
   constructor() {
     makeAutoObservable(this);
   }
+
+  setUser(user: User | null): void {
+    this.user = user;
+  }
+
+  setIsAuth(value: boolean): void {
+    this.isAuth = value;
+  }
+
+  setIsUserLoaded(value: boolean): void {
+    this.isUserLoaded = value;
+  }
+
+  setIsAuthInitialized(value: boolean): void {
+    this.isAuthInitialized = value;
+  }
 }

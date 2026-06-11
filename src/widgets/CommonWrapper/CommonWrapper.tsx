@@ -7,7 +7,7 @@ import { observer } from "mobx-react-lite";
 
 
 export const CommonWrapper = observer(({ children }: { children: ReactNode }) => {
-  const isLoading = StoreLocator.get().settings.state.isLoading;
+  const isLoading = StoreLocator.get().settings.sync.isLoading;
 
   return (
     <Box sx={{ position: "relative" }}>

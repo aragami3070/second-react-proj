@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 
 export default observer(function RegisterPage() {
   const router = useRouter();
-  const { isAuth, isUserLoaded } = StoreLocator.get().user.state;
+  const { isAuth, isUserLoaded } = StoreLocator.get().user.sync;
 
   useEffect(() => {
     if (isAuth && isUserLoaded) {

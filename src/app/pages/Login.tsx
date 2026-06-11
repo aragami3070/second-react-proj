@@ -9,7 +9,7 @@ import { useEffect } from "react";
 
 export default observer(function LoginPage() {
   const router = useRouter();
-  const { isAuth, isUserLoaded } = StoreLocator.get().user.state;
+  const { isAuth, isUserLoaded } = StoreLocator.get().user.sync;
 
   useEffect(() => {
     if (isAuth && isUserLoaded) {

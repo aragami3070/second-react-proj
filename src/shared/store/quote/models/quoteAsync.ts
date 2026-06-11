@@ -1,9 +1,12 @@
 import { quotesApi } from "@/shared/api/quotesApi";
 import { asyncHandler } from "@/shared/utils/asyncHandler";
-import type { QuoteSync } from "./quoteSync";
+import type { QuoteState } from "./quoteState";
+import { makeAutoObservable } from "mobx";
 
 export class QuoteAsync {
-  constructor(private sync: QuoteSync) { }
+  constructor(private state: QuoteState) {
+    makeAutoObservable(this);
+  }
 
   createQuote = async (quoteText: string) => {
     return asyncHandler(
@@ -17,7 +20,7 @@ export class QuoteAsync {
     return asyncHandler(
       async () => {
         const res = await quotesApi.fetchQuotesCount();
-        this.sync.setTotal(res.data);
+        this.state.setTotal(res.data);
       }
     );
   };
@@ -26,7 +29,7 @@ export class QuoteAsync {
     return asyncHandler(
       async () => {
         const res = await quotesApi.fetchQuotes(offset, limit);
-        this.sync.setQuotes(res.data, offset);
+        this.state.setQuotes(res.data, offset);
 
         await this.fetchQuotesCount();
       }
@@ -37,7 +40,7 @@ export class QuoteAsync {
     return asyncHandler(
       async () => {
         const res = await quotesApi.fetchRandomQuote();
-        this.sync.setRandomQuote(res.data);
+        this.state.setRandomQuote(res.data);
       }
     );
   };

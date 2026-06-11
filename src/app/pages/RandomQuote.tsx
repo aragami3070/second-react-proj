@@ -7,7 +7,7 @@ import { StoreLocator } from "@/shared/store";
 import { observer } from "mobx-react-lite";
 
 export const RandomQuotePage = observer(() => {
-  const randomQuote = StoreLocator.get().quote.state.randomQuote;
+  const randomQuote = StoreLocator.get().quote.sync.randomQuote;
   const { fetchRandomQuote } = StoreLocator.get().quote.async;
 
   const getRandomQuote = async () => {

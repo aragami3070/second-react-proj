@@ -12,10 +12,10 @@ export const asyncHandler = async <T>(
   // Флаг, если нужен тихий запрос без лоадера
   silent: boolean = false
 ) => {
-  const { startLoading, stopLoading, setError } = StoreLocator.get().settings.sync;
+  const settingsState = StoreLocator.get().settings.state;
 
   try {
-    if (!silent) startLoading();
+    if (!silent) settingsState.setLoading(true);
     return await requestLogic();
   } catch (e: any) {
     const error = e as AxiosError<ApiError>;
@@ -23,9 +23,9 @@ export const asyncHandler = async <T>(
     if (errorLogic) {
       return errorLogic(error);
     } else {
-      setError(getErrorMessage(error));
+      settingsState.setError(getErrorMessage(error));
     }
   } finally {
-    if (!silent) stopLoading();
+    if (!silent) settingsState.setLoading(false);
   }
 };

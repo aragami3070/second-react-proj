@@ -10,6 +10,6 @@ export class QuoteStore {
   constructor() {
     this.state = new QuoteState();
     this.sync = new QuoteSync(this.state);
-    this.async = new QuoteAsync(this.sync);
+    this.async = new QuoteAsync(this.state);
   }
 }

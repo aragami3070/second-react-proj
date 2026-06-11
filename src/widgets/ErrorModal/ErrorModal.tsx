@@ -11,7 +11,7 @@ import { StoreLocator } from "@/shared/store";
 import { observer } from "mobx-react-lite";
 
 export const ErrorModal = observer(() => {
-  const { error, isErrorModalOpen } = StoreLocator.get().settings.state;
+  const { error, isErrorModalOpen } = StoreLocator.get().settings.sync;
 
   const handleClose = () => {
     const { clearError } = StoreLocator.get().settings.sync;

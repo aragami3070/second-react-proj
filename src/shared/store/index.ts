@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import { SettingsStore } from './settings';
 import { UserStore } from './user';
 import { QuoteStore } from './quote';
@@ -10,8 +11,9 @@ export class RootStore {
 
   constructor() {
     this.settings = new SettingsStore();
-    this.user = new UserStore(this.settings.sync);
+    this.user = new UserStore(this.settings.state);
     this.quote = new QuoteStore();
+    makeAutoObservable(this);
   }
 }
 

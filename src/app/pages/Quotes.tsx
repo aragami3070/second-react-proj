@@ -8,7 +8,7 @@ import { observer } from "mobx-react-lite";
 
 
 export const QuotesPage = observer(() => {
-  const { quotes, offset, limit, total } = StoreLocator.get().quote.state;
+  const { quotes, offset, limit, total } = StoreLocator.get().quote.sync;
   const { fetchQuotes } = StoreLocator.get().quote.async;
 
   const page = Math.floor(offset / limit) + 1;
