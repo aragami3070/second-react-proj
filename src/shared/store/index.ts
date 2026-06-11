@@ -1,7 +1,7 @@
-import { makeAutoObservable } from 'mobx';
-import { SettingsStore } from './settings';
-import { UserStore } from './user';
-import { QuoteStore } from './quote';
+import { makeAutoObservable } from "mobx";
+import { settingsStore, SettingsStore } from "./settings";
+import { userStore, UserStore } from "./user";
+import { quoteStore, QuoteStore } from "./quote";
 
 export class RootStore {
   // Дочерние сторы
@@ -10,14 +10,14 @@ export class RootStore {
   public quote: QuoteStore;
 
   constructor() {
-    this.settings = new SettingsStore();
-    this.user = new UserStore(this.settings.state);
-    this.quote = new QuoteStore();
+    this.settings = settingsStore;
+    this.user = userStore;
+    this.quote = quoteStore;
     makeAutoObservable(this);
   }
 }
 
-export const rootStore = new RootStore();
+const rootStore = new RootStore();
 
 // Service Locator - доступ к стору вне React-контекста
 export class StoreLocator {

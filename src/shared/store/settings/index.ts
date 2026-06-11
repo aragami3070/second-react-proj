@@ -10,3 +10,5 @@ export class SettingsStore {
     this.sync = new SettingsSync(this.state);
   }
 }
+
+export const settingsStore = new SettingsStore();

@@ -13,3 +13,5 @@ export class QuoteStore {
     this.async = new QuoteAsync(this.state);
   }
 }
+
+export const quoteStore = new QuoteStore();
